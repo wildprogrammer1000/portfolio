@@ -25,29 +25,35 @@ export function ProjectBrowser({
     <section className="flex flex-col gap-6">
       <div className="flex flex-col gap-3">
         <h2 className="text-lg font-medium">프로젝트</h2>
-        <div role="group" aria-label="카테고리" className="flex flex-wrap gap-2">
-          <Button
-            variant={category === allCategories ? "default" : "outline"}
-            aria-pressed={category === allCategories}
-            onClick={() => setCategory(allCategories)}
-          >
-            전체
-          </Button>
-          {categories.map((item) => (
+        {categories.length > 0 ? (
+          <div role="group" aria-label="카테고리" className="flex flex-wrap gap-2">
             <Button
-              key={item}
-              variant={category === item ? "default" : "outline"}
-              aria-pressed={category === item}
-              onClick={() => setCategory(item)}
+              variant={category === allCategories ? "default" : "outline"}
+              aria-pressed={category === allCategories}
+              onClick={() => setCategory(allCategories)}
             >
-              {item}
+              전체
             </Button>
-          ))}
-        </div>
+            {categories.map((item) => (
+              <Button
+                key={item}
+                variant={category === item ? "default" : "outline"}
+                aria-pressed={category === item}
+                onClick={() => setCategory(item)}
+              >
+                {item}
+              </Button>
+            ))}
+          </div>
+        ) : null}
       </div>
       <div aria-live="polite">
         <p className="sr-only">{visible.length}개의 프로젝트</p>
-        {visible.length === 0 ? (
+        {projects.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            등록된 프로젝트가 없습니다.
+          </p>
+        ) : visible.length === 0 ? (
           <p className="text-sm text-muted-foreground">
             이 카테고리의 프로젝트가 없습니다.
           </p>

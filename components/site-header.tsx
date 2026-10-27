@@ -32,8 +32,15 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
                 {profile.name}
               </h1>
+              <div className="flex flex-col gap-1">
+                {profile.intro.map((line) => (
+                  <p key={line} className="text-base leading-7">
+                    {line}
+                  </p>
+                ))}
+              </div>
               <p className="text-sm text-muted-foreground">
-                경력 {profile.yearsOfExperience}년
+                프로그래밍 경력 {profile.yearsOfExperience}년
               </p>
               <a
                 href={`mailto:${profile.email}`}
