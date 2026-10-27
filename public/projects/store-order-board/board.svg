@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#F4F4F5"/>
+  <rect x="40" y="32" width="1120" height="736" rx="12" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <line x1="40" y1="96" x2="1160" y2="96" stroke="#E4E4E7"/>
+  <text x="72" y="72" fill="#18181B" font-family="sans-serif" font-size="22" font-weight="600">주문 보드</text>
+  <text x="900" y="70" fill="#71717A" font-family="sans-serif" font-size="14">점심 피크 · 4건</text>
+  <text x="72" y="148" fill="#155E95" font-family="sans-serif" font-size="15" font-weight="600">접수 2</text>
+  <text x="432" y="148" fill="#71717A" font-family="sans-serif" font-size="15" font-weight="600">제조 1</text>
+  <text x="792" y="148" fill="#71717A" font-family="sans-serif" font-size="15" font-weight="600">완료 1</text>
+  <rect x="72" y="172" width="328" height="128" rx="8" fill="#FFFFFF" stroke="#155E95"/>
+  <text x="96" y="212" fill="#71717A" font-family="sans-serif" font-size="14">#A-104 · 키오스크</text>
+  <text x="96" y="252" fill="#18181B" font-family="sans-serif" font-size="22" font-weight="600">아메리카노</text>
+  <text x="360" y="252" fill="#71717A" font-family="sans-serif" font-size="16">2</text>
+  <rect x="72" y="316" width="328" height="128" rx="8" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="96" y="356" fill="#71717A" font-family="sans-serif" font-size="14">#A-105 · 배달</text>
+  <text x="96" y="396" fill="#18181B" font-family="sans-serif" font-size="22" font-weight="600">카페라떼</text>
+  <text x="360" y="396" fill="#71717A" font-family="sans-serif" font-size="16">1</text>
+  <rect x="432" y="172" width="328" height="128" rx="8" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="456" y="212" fill="#71717A" font-family="sans-serif" font-size="14">#A-098 · 카운터</text>
+  <text x="456" y="252" fill="#18181B" font-family="sans-serif" font-size="22" font-weight="600">바닐라떼</text>
+  <text x="720" y="252" fill="#71717A" font-family="sans-serif" font-size="16">1</text>
+  <rect x="792" y="172" width="328" height="128" rx="8" fill="#FAFAFA" stroke="#E4E4E7"/>
+  <text x="816" y="212" fill="#71717A" font-family="sans-serif" font-size="14">#A-091 · 키오스크</text>
+  <text x="816" y="252" fill="#3F3F46" font-family="sans-serif" font-size="22" font-weight="600">에스프레소</text>
+  <text x="1080" y="252" fill="#71717A" font-family="sans-serif" font-size="16">1</text>
+</svg>
