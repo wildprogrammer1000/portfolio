@@ -8,7 +8,13 @@ import { PageContainer } from "@/components/page-container"
 import { cn } from "@/lib/utils"
 import { getProjectBySlug, projects } from "@/src/data/projects"
 
+const placeholderSlug = "__placeholder__"
+
 export function generateStaticParams() {
+  if (projects.length === 0) {
+    return [{ slug: placeholderSlug }]
+  }
+
   return projects.map((project) => ({ slug: project.slug }))
 }
 
