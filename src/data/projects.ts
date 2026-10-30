@@ -3,9 +3,9 @@ export type ProjectLink = {
   href: string
 }
 
-export type ProjectScreenshot = {
-  src: string
-  alt: string
+export type ProjectStack = {
+  role: string
+  items: string[]
 }
 
 export type Project = {
@@ -14,15 +14,40 @@ export type Project = {
   category: string
   summary: string
   thumbnail: string
-  problem: string
-  role: string
-  stack: string[]
+  stack: ProjectStack[]
   period: string
   links: ProjectLink[]
-  screenshots: ProjectScreenshot[]
+  screenshots: string[]
 }
 
-export const projects: Project[] = []
+export const projects: Project[] = [
+  {
+    slug: "yachtdice",
+    title: "YachtDice",
+    category: "웹게임",
+    summary: "실시간 멀티플레이로 즐기는 3D 요트 다이스 보드게임.",
+    thumbnail: "https://yachtdice.seungjuh.com/icon-512.png",
+    stack: [
+      { role: "웹", items: ["React", "TypeScript", "Vite"] },
+      { role: "스타일", items: ["Tailwind CSS"] },
+      { role: "상태 관리", items: ["Zustand"] },
+      { role: "웹 3D", items: ["React Three Fiber", "Rapier"] },
+      { role: "실시간 통신", items: ["Socket.IO", "Fastify"] },
+      {
+        role: "배포",
+        items: ["Vercel", "AWS Lightsail", "AWS Route 53", "Docker"],
+      },
+    ],
+    period: "2026.10.10 ~ 2026.10.25",
+    links: [{ label: "URL", href: "https://yachtdice.seungjuh.com" }],
+    screenshots: [
+      "https://yachtdice.seungjuh.com/01-home.png",
+      "https://yachtdice.seungjuh.com/02-room.png",
+      "https://yachtdice.seungjuh.com/03-ingame.png",
+      "https://yachtdice.seungjuh.com/04-scoreboard.png",
+    ],
+  },
+]
 
 export function getCategories() {
   return [...new Set(projects.map((project) => project.category))]

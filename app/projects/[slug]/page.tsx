@@ -1,10 +1,13 @@
 import type { Metadata } from "next"
 import type { ReactNode } from "react"
-import Image from "next/image"
+import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
+import { CategoryChip } from "@/components/category-chip"
 import { PageContainer } from "@/components/page-container"
+import { ScreenshotCarousel } from "@/components/screenshot-carousel"
+import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { getProjectBySlug, projects } from "@/src/data/projects"
 
@@ -68,12 +71,25 @@ export default async function ProjectPage(
       <PageContainer className="flex flex-col gap-10 py-8 sm:py-12">
         <Link
           href="/"
-          className="w-fit text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+          className={cn(
+            buttonVariants({
+              variant: "outline",
+              size: "lg",
+              className: "w-fit text-base",
+            }),
+          )}
         >
+          <ChevronLeft />
           목록
         </Link>
+        {project.screenshots.length > 0 ? (
+          <ScreenshotCarousel
+            title={project.title}
+            screenshots={project.screenshots}
+          />
+        ) : null}
         <header className="flex flex-col gap-3">
-          <p className="text-sm text-muted-foreground">{project.category}</p>
+          <CategoryChip>{project.category}</CategoryChip>
           <h1 className="text-3xl font-semibold tracking-tight">
             {project.title}
           </h1>
@@ -81,31 +97,41 @@ export default async function ProjectPage(
             {project.summary}
           </p>
         </header>
+        <DetailBlock title="기술 스택">
+          <dl className="flex flex-col gap-3">
+            {project.stack.map((group) => (
+              <div
+                key={group.role}
+                className="grid grid-cols-[7.5rem_1fr] gap-4"
+              >
+                <dt className="text-sm text-muted-foreground">{group.role}</dt>
+                <dd>{group.items.join(" · ")}</dd>
+              </div>
+            ))}
+          </dl>
+        </DetailBlock>
         <div className="grid gap-8 sm:grid-cols-2">
-          <DetailBlock title="문제" className="sm:col-span-2">
-            <p className="max-w-2xl">{project.problem}</p>
-          </DetailBlock>
-          <DetailBlock title="맡은 역할" className="sm:col-span-2">
-            <p className="max-w-2xl">{project.role}</p>
-          </DetailBlock>
-          <DetailBlock title="기술 스택">
-            <p>{project.stack.join(" · ")}</p>
-          </DetailBlock>
           <DetailBlock title="기간">
             <p>{project.period}</p>
           </DetailBlock>
           {project.links.length > 0 ? (
-            <DetailBlock title="링크" className="sm:col-span-2">
-              <ul className="flex flex-wrap gap-4">
+            <DetailBlock title="링크">
+              <ul className="flex flex-col gap-2">
                 {project.links.map((link) => (
-                  <li key={link.href}>
+                  <li
+                    key={link.href}
+                    className="flex flex-wrap items-baseline gap-x-2"
+                  >
+                    <span className="text-sm text-muted-foreground">
+                      {link.label}
+                    </span>
                     <a
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary underline-offset-4 hover:underline"
+                      className="break-all text-primary underline-offset-4 hover:underline"
                     >
-                      {link.label}
+                      {link.href}
                       <span className="sr-only"> (새 탭)</span>
                     </a>
                   </li>
@@ -114,32 +140,6 @@ export default async function ProjectPage(
             </DetailBlock>
           ) : null}
         </div>
-        {project.screenshots.length > 0 ? (
-          <section className="flex flex-col gap-4">
-            <h2 className="text-sm font-medium text-muted-foreground">
-              스크린샷
-            </h2>
-            <ul className="flex flex-col gap-6">
-              {project.screenshots.map((screenshot) => (
-                <li key={screenshot.src}>
-                  <figure className="flex flex-col gap-2">
-                    <Image
-                      src={screenshot.src}
-                      alt=""
-                      width={1200}
-                      height={800}
-                      unoptimized
-                      className="h-auto w-full border border-border bg-muted"
-                    />
-                    <figcaption className="text-sm text-muted-foreground">
-                      {screenshot.alt}
-                    </figcaption>
-                  </figure>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
       </PageContainer>
     </main>
   )
