@@ -74,6 +74,32 @@ export const projects: Project[] = [
       "https://numberbaseball.seungjuh.com/04-leaderboard.png",
     ],
   },
+  {
+    slug: "cryptid",
+    title: "크립티드",
+    category: "웹게임",
+    summary: "단서를 숨기고 서식지를 찾는 추리 보드게임.",
+    thumbnail: "https://cryptid.seungjuh.com/logo.png",
+    stack: [
+      { role: "웹", items: ["React", "TypeScript", "Vite"] },
+      { role: "스타일", items: ["Pure CSS"] },
+      { role: "모션", items: ["Framer Motion"] },
+      { role: "실시간 통신", items: ["Nakama Game Server"] },
+      { role: "인증", items: ["Google OAuth"] },
+      {
+        role: "배포",
+        items: ["Vercel", "AWS Lightsail", "AWS Route 53", "Docker"],
+      },
+    ],
+    period: "2026.11.9 ~ 2026.11.10",
+    links: [{ label: "URL", href: "https://cryptid.seungjuh.com" }],
+    screenshots: [
+      "https://cryptid.seungjuh.com/01-home.png",
+      "https://cryptid.seungjuh.com/02-room.png",
+      "https://cryptid.seungjuh.com/03-game.png",
+      "https://cryptid.seungjuh.com/04-result.png",
+    ],
+  },
 ]
 
 export function getCategories() {
