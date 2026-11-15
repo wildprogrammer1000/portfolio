@@ -1,8 +1,17 @@
+"use client"
+
+import { motion, useReducedMotion } from "framer-motion"
 import { Mail } from "lucide-react"
 import Link from "next/link"
 
 import { PageContainer } from "@/components/page-container"
 import { buttonVariants } from "@/components/ui/button"
+import {
+  fadeUpVariants,
+  reducedMotionSafe,
+  softTransition,
+  staggerContainerVariants,
+} from "@/lib/motion"
 import { cn } from "@/lib/utils"
 import { profile } from "@/src/data/profile"
 
@@ -23,33 +32,65 @@ function ContactLink({ size }: { size: "default" | "lg" }) {
 }
 
 export function SiteHeader({ variant }: SiteHeaderProps) {
+  const reducedMotion = useReducedMotion()
+  const itemVariants = reducedMotionSafe(reducedMotion, fadeUpVariants)
+
   switch (variant) {
     case "home":
       return (
         <header className="border-b border-border">
           <PageContainer className="flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:py-12">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            <motion.div
+              className="flex flex-col gap-2"
+              initial="hidden"
+              animate="visible"
+              variants={
+                reducedMotion
+                  ? undefined
+                  : staggerContainerVariants
+              }
+            >
+              <motion.h1
+                className="text-3xl font-semibold tracking-tight sm:text-4xl"
+                variants={itemVariants}
+                transition={softTransition}
+              >
                 {profile.name}
-              </h1>
-              <div className="flex flex-col gap-1">
+              </motion.h1>
+              <motion.div
+                className="flex flex-col gap-1"
+                variants={itemVariants}
+                transition={softTransition}
+              >
                 {profile.intro.map((line) => (
                   <p key={line} className="text-base leading-7">
                     {line}
                   </p>
                 ))}
-              </div>
-              <p className="text-sm text-muted-foreground">
+              </motion.div>
+              <motion.p
+                className="text-sm text-muted-foreground"
+                variants={itemVariants}
+                transition={softTransition}
+              >
                 프로그래밍 경력 {profile.yearsOfExperience}년
-              </p>
-              <a
+              </motion.p>
+              <motion.a
                 href={`mailto:${profile.email}`}
                 className="w-fit text-sm text-foreground underline-offset-4 hover:underline"
+                variants={itemVariants}
+                transition={softTransition}
               >
                 {profile.email}
-              </a>
-            </div>
-            <ContactLink size="lg" />
+              </motion.a>
+            </motion.div>
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...softTransition, delay: reducedMotion ? 0 : 0.16 }}
+            >
+              <ContactLink size="lg" />
+            </motion.div>
           </PageContainer>
         </header>
       )

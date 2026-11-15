@@ -1,0 +1,135 @@
+"use client"
+
+import { motion, useReducedMotion } from "framer-motion"
+import { ChevronLeft } from "lucide-react"
+import Link from "next/link"
+import type { ReactNode } from "react"
+
+import { CategoryChip } from "@/components/category-chip"
+import { ScreenshotCarousel } from "@/components/screenshot-carousel"
+import { buttonVariants } from "@/components/ui/button"
+import {
+  fadeUpVariants,
+  reducedMotionSafe,
+  softTransition,
+  staggerContainerVariants,
+} from "@/lib/motion"
+import { cn } from "@/lib/utils"
+import type { Project } from "@/src/data/projects"
+
+function DetailBlock({
+  title,
+  children,
+  className,
+}: {
+  title: string
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <section className={cn("flex flex-col gap-2", className)}>
+      <h2 className="text-sm font-medium text-muted-foreground">{title}</h2>
+      <div className="text-base leading-7">{children}</div>
+    </section>
+  )
+}
+
+export function ProjectDetail({ project }: { project: Project }) {
+  const reducedMotion = useReducedMotion()
+  const itemVariants = reducedMotionSafe(reducedMotion, fadeUpVariants)
+
+  return (
+    <motion.div
+      className="flex flex-col gap-10"
+      initial="hidden"
+      animate="visible"
+      variants={reducedMotion ? undefined : staggerContainerVariants}
+    >
+      <motion.div variants={itemVariants} transition={softTransition}>
+        <Link
+          href="/"
+          className={cn(
+            buttonVariants({
+              variant: "outline",
+              size: "lg",
+              className: "w-fit text-base",
+            }),
+          )}
+        >
+          <ChevronLeft />
+          목록
+        </Link>
+      </motion.div>
+      {project.screenshots.length > 0 ? (
+        <motion.div variants={itemVariants} transition={softTransition}>
+          <ScreenshotCarousel
+            title={project.title}
+            screenshots={project.screenshots}
+          />
+        </motion.div>
+      ) : null}
+      <motion.header
+        className="flex flex-col gap-3"
+        variants={itemVariants}
+        transition={softTransition}
+      >
+        <CategoryChip>{project.category}</CategoryChip>
+        <h1 className="text-3xl font-semibold tracking-tight">
+          {project.title}
+        </h1>
+        <p className="max-w-2xl text-base leading-7 text-muted-foreground">
+          {project.summary}
+        </p>
+      </motion.header>
+      <motion.div variants={itemVariants} transition={softTransition}>
+        <DetailBlock title="기술 스택">
+          <dl className="flex flex-col gap-3">
+            {project.stack.map((group) => (
+              <div
+                key={group.role}
+                className="grid grid-cols-[7.5rem_1fr] gap-4"
+              >
+                <dt className="text-sm text-muted-foreground">{group.role}</dt>
+                <dd>{group.items.join(" · ")}</dd>
+              </div>
+            ))}
+          </dl>
+        </DetailBlock>
+      </motion.div>
+      <motion.div
+        className="grid gap-8 sm:grid-cols-2"
+        variants={itemVariants}
+        transition={softTransition}
+      >
+        <DetailBlock title="기간">
+          <p>{project.period}</p>
+        </DetailBlock>
+        {project.links.length > 0 ? (
+          <DetailBlock title="링크">
+            <ul className="flex flex-col gap-2">
+              {project.links.map((link) => (
+                <li
+                  key={link.href}
+                  className="flex flex-wrap items-baseline gap-x-2"
+                >
+                  <span className="text-sm text-muted-foreground">
+                    {link.label}
+                  </span>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="break-all text-primary underline-offset-4 hover:underline"
+                  >
+                    {link.href}
+                    <span className="sr-only"> (새 탭)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </DetailBlock>
+        ) : null}
+      </motion.div>
+    </motion.div>
+  )
+}

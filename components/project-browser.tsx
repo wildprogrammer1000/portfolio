@@ -1,9 +1,16 @@
 "use client"
 
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useState } from "react"
 
 import { ProjectCard } from "@/components/project-card"
 import { Button } from "@/components/ui/button"
+import {
+  fadeUpVariants,
+  reducedMotionSafe,
+  softTransition,
+  staggerContainerVariants,
+} from "@/lib/motion"
 import type { Project } from "@/src/data/projects"
 
 const allCategories = "all"
@@ -16,6 +23,8 @@ export function ProjectBrowser({
   categories: string[]
 }) {
   const [category, setCategory] = useState(allCategories)
+  const reducedMotion = useReducedMotion()
+  const itemVariants = reducedMotionSafe(reducedMotion, fadeUpVariants)
   const visible =
     category === allCategories
       ? projects
@@ -53,18 +62,44 @@ export function ProjectBrowser({
           <p className="text-sm text-muted-foreground">
             등록된 프로젝트가 없습니다.
           </p>
-        ) : visible.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            이 카테고리의 프로젝트가 없습니다.
-          </p>
         ) : (
-          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {visible.map((project) => (
-              <li key={project.slug}>
-                <ProjectCard project={project} />
-              </li>
-            ))}
-          </ul>
+          <AnimatePresence mode="wait" initial={false}>
+            {visible.length === 0 ? (
+              <motion.p
+                key="empty"
+                className="text-sm text-muted-foreground"
+                initial={reducedMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={reducedMotion ? undefined : { opacity: 0 }}
+                transition={softTransition}
+              >
+                이 카테고리의 프로젝트가 없습니다.
+              </motion.p>
+            ) : (
+              <motion.ul
+                key={category}
+                className="grid grid-cols-1 gap-6 sm:grid-cols-2"
+                initial="hidden"
+                animate="visible"
+                exit={reducedMotion ? undefined : { opacity: 0 }}
+                variants={
+                  reducedMotion ? undefined : staggerContainerVariants
+                }
+                transition={softTransition}
+              >
+                {visible.map((project) => (
+                  <motion.li
+                    key={project.slug}
+                    variants={itemVariants}
+                    transition={softTransition}
+                    layout={!reducedMotion}
+                  >
+                    <ProjectCard project={project} />
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
         )}
       </div>
     </section>

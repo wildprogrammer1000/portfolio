@@ -1,31 +1,51 @@
+"use client"
+
+import { motion, useReducedMotion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 
 import { CategoryChip } from "@/components/category-chip"
+import { softTransition } from "@/lib/motion"
 import type { Project } from "@/src/data/projects"
 
 export function ProjectCard({ project }: { project: Project }) {
+  const reducedMotion = useReducedMotion()
+
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card outline-none transition-colors hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+    <motion.div
+      whileHover={
+        reducedMotion
+          ? undefined
+          : {
+              y: -2,
+              transition: softTransition,
+            }
+      }
+      className="h-full"
     >
-      <Image
-        src={project.thumbnail}
-        alt=""
-        width={1200}
-        height={675}
-        priority
-        unoptimized
-        className="aspect-video w-full bg-muted object-cover"
-      />
-      <div className="flex flex-col gap-2 p-4">
-        <CategoryChip>{project.category}</CategoryChip>
-        <h2 className="text-lg font-medium">{project.title}</h2>
-        <p className="line-clamp-2 text-sm leading-6 text-muted-foreground">
-          {project.summary}
-        </p>
-      </div>
-    </Link>
+      <Link
+        href={`/projects/${project.slug}`}
+        className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card outline-none transition-colors hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+      >
+        <div className="overflow-hidden bg-muted">
+          <Image
+            src={project.thumbnail}
+            alt=""
+            width={1200}
+            height={675}
+            priority
+            unoptimized
+            className="aspect-video w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
+          />
+        </div>
+        <div className="flex flex-col gap-2 p-4">
+          <CategoryChip>{project.category}</CategoryChip>
+          <h2 className="text-lg font-medium">{project.title}</h2>
+          <p className="line-clamp-2 text-sm leading-6 text-muted-foreground">
+            {project.summary}
+          </p>
+        </div>
+      </Link>
+    </motion.div>
   )
 }
