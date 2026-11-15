@@ -100,6 +100,33 @@ export const projects: Project[] = [
       "https://cryptid.makerju.com/04-result.png",
     ],
   },
+  {
+    slug: "davincicode",
+    title: "다빈치 코드",
+    category: "웹게임",
+    summary: "흑·백 타일 숫자를 추리해 최후 1인이 되는 온라인 보드게임.",
+    thumbnail: "https://davincicode.makerju.com/logo.png",
+    stack: [
+      { role: "웹", items: ["React", "TypeScript", "Vite"] },
+      { role: "스타일", items: ["Tailwind CSS"] },
+      { role: "모션", items: ["Framer Motion"] },
+      { role: "상태", items: ["Zustand"] },
+      { role: "실시간 통신", items: ["Nakama Game Server"] },
+      { role: "인증", items: ["Nakama Device Auth"] },
+      {
+        role: "배포",
+        items: ["Vercel", "AWS Lightsail", "AWS Route 53", "Docker"],
+      },
+    ],
+    period: "2026.11.11",
+    links: [{ label: "URL", href: "https://davincicode.makerju.com" }],
+    screenshots: [
+      "https://davincicode.makerju.com/01-home.png",
+      "https://davincicode.makerju.com/02-room.png",
+      "https://davincicode.makerju.com/03-game.png",
+      "https://davincicode.makerju.com/04-result.png",
+    ],
+  }
 ]
 
 export function getCategories() {
